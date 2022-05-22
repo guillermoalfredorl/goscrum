@@ -11,7 +11,7 @@ export const Header = () => {
 
   return (
     <header>
-      <span>Go Scrum</span>
+      <img src="/img/GoScrum.jpg" alt="Logo" />
       <div onClick={handleLogout}>x</div>
     </header>
   );
