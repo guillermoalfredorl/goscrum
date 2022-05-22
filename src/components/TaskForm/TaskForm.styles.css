@@ -60,6 +60,7 @@
 }
 
 .tasks-form button {
+    margin-bottom: 20px;
     transition: all 0.3s ease-out;
     background-color: var(--global-primary-color);
     border-radius: var(--global-radius);

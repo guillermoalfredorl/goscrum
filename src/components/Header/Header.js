@@ -5,14 +5,17 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("logged");
+    localStorage.removeItem("token");
     navigate("/login", { replace: true });
   };
 
   return (
     <header>
       <img src="/img/GoScrum.jpg" alt="Logo" />
-      <div onClick={handleLogout}>x</div>
+      <div className="wrapper_right_header">
+        <div>Pepe</div>
+        <div onClick={handleLogout}>x</div>
+      </div>
     </header>
   );
 };

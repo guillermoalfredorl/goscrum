@@ -1,63 +1,77 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
+import * as Yup from "yup";
 import { useFormik } from "formik";
 
 import "../Auth.styles.css";
+
+const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env;
 
 const Login = () => {
   const navigate = useNavigate();
 
   const initialValues = {
-    email: "",
+    userName: "",
     password: "",
   };
 
-  const validate = (values) => {
-    const errors = {};
-
-    if (!values.email) {
-      errors.email = "Email is required";
-    }
-
-    if (!values.password) {
-      errors.password = "Password is required";
-    }
-
-    return errors;
-  };
+  const validationSchema = () =>
+    Yup.object().shape({
+      userName: Yup.string().min(4).required(),
+      password: Yup.string().required(),
+    });
 
   const onSubmit = () => {
-    localStorage.setItem("logged", "yes");
-    navigate("/", { replace: true });
+    const { userName, password } = values;
+    fetch(`${API_ENDPOINT}auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userName,
+        password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        localStorage.setItem("token", data?.result?.token);
+        navigate("/", { replace: true });
+      });
   };
 
-  const formik = useFormik({ initialValues, validate, onSubmit });
+  const formik = useFormik({ initialValues, validationSchema, onSubmit });
 
-  const { handleSubmit, handleChange, values, errors } = formik;
+  const { handleSubmit, handleChange, values, errors, touched, handleBlur } =
+    formik;
 
   return (
     <div className="auth">
       <form onSubmit={handleSubmit}>
         <h1>Log In</h1>
         <div>
-          <label>Email</label>
+          <label>UserName</label>
           <input
-            name="email"
-            type="email"
-            value={values.email}
+            className={errors.userName && touched.userName ? "error" : ""}
+            name="userName"
+            type="text"
+            value={values.userName}
+            onBlur={handleBlur}
             onChange={handleChange}
           />
-          {errors.email && <div>{errors.email}</div>}
+          {errors.userName && touched.userName && <div>{errors.userName}</div>}
         </div>
         <div>
           <label>Password</label>
           <input
+            className={errors.password && touched.password ? "error" : ""}
             name="password"
             type="password"
             value={values.password}
+            onBlur={handleBlur}
             onChange={handleChange}
           />
-          {errors.password && <div>{errors.password}</div>}
+          {errors.password && touched.password && <div>{errors.password}</div>}
         </div>
         <div>
           <button type="submit">Continue</button>

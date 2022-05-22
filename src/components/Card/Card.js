@@ -1,5 +1,5 @@
 export const Card = ({
-  data: { title, datetime, creator, description, type, priority },
+  data: { title, datetime, creator, type, priority, description },
 }) => (
   <div className="card">
     <div className="close">x</div>
