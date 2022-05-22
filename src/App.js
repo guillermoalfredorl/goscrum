@@ -2,8 +2,8 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
 import "./App.css";
-import Login from "./components/views/Login/Login";
-import Register from "./components/views/Register/Register";
+import Login from "./components/views/auth/Login/Login";
+import Register from "./components/views/auth/Register/Register";
 import { Error404 } from "./components/views/Error404/Error404";
 import { Tasks } from "./components/views/Tasks/Tasks";
 
@@ -56,6 +56,20 @@ const App = () => {
               variants={pageTransition}
             >
               <Login />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <motion.div
+              className="page"
+              initial="out"
+              animate="in"
+              exit="out"
+              variants={pageTransition}
+            >
+              <Register />
             </motion.div>
           }
         />

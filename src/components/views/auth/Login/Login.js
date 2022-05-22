@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from "formik";
 
-import "./Login.styles.css";
-import { Navigate } from "react-router-dom";
+import "../Auth.styles.css";
 
 const Login = () => {
   const navigate = useNavigate();
+
   const initialValues = {
     email: "",
     password: "",
@@ -60,7 +60,10 @@ const Login = () => {
           {errors.password && <div>{errors.password}</div>}
         </div>
         <div>
-          <button type="submit">Send</button>
+          <button type="submit">Continue</button>
+        </div>
+        <div>
+          <Link to="/register">Sign Up</Link>
         </div>
       </form>
     </div>
